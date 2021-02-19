@@ -195,7 +195,7 @@
               }
             })
             .then(response => response.json())
-            .then(json => document.getElementById('output').textContent = json)
+            .then(json => document.getElementById('output').textContent = '{}')
             .then(err => document.getElementById('output').textContent = err);
       }
 
