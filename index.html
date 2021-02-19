@@ -162,7 +162,7 @@
             'title': title
           }
 
-          const id = document.getElementById('recordIDcontainer').value;
+          const id = document.getElementById('recordID').value;
           const endpoint = `${document.getElementById('endpoint').value.toString()}/${id.toString()}`;
           fetch(endpoint, {
               method: 'PUT',
