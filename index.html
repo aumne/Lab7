@@ -94,7 +94,7 @@
         const endpoint = document.getElementById('endpoint').value.toString();
         fetch(endpoint)
           .then(response => response.json())
-          .then(json => document.getElementById('output').textContent = JSON.stringyfy(json))
+          .then(json => document.getElementById('output').textContent = JSON.stringify(json))
           .then(err => document.getElementById('output').textContent = err);
       }
 
@@ -110,7 +110,7 @@
         const endpoint = `${document.getElementById('endpoint').value.toString()}/${id.toString()}`;
         fetch(endpoint)
           .then(response => response.json())
-          .then(json => document.getElementById('output').textContent = JSON.stringyfy(json))
+          .then(json => document.getElementById('output').textContent = JSON.stringify(json))
           .then(err => document.getElementById('output').textContent = err);
       }
 
@@ -140,7 +140,7 @@
               body: JSON.stringify(postdata)
             })
             .then(response => response.json())
-            .then(json => document.getElementById('output').textContent = JSON.stringyfy(json))
+            .then(json => document.getElementById('output').textContent = JSON.stringify(json))
             .then(err => document.getElementById('output').textContent = err);
         }
       }
@@ -172,7 +172,7 @@
               body: JSON.stringify(postdata)
             })
             .then(response => response.json())
-            .then(json => document.getElementById('output').textContent = JSON.stringyfy(json))
+            .then(json => document.getElementById('output').textContent = JSON.stringify(json))
             .then(err => document.getElementById('output').textContent = err);
         }
       }
