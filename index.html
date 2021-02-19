@@ -44,12 +44,16 @@
 
     <form id="recordForm">
       <div>
-        <label for="author">Author</label>
-        <input type="text" name="author" id="author" />
+        <label for="author">Author:</label>
+        <input
+          type="text"
+          name="author"
+          id="author"
+        />
       </div>
 
       <div>
-        <label for="title">Title: </label>
+        <label for="title">Title:</label>
         <input
           type="text"
           name="title"
@@ -58,7 +62,7 @@
       </div>
 
       <div id="recordIDcontainer">
-        <label for="recordID">Record ID: </label>
+        <label for="recordID">Record ID:</label>
         <input
           type="recordID"
           name="recordID"
@@ -84,7 +88,14 @@
       // The main difference from fetchOne() will be the URL you request from; check
       // the writeup to view the URL pattern for fetch one and fetch all
       function fetchAll() {
-        // TODO
+        document.getElementById('recordForm').style.display = none;
+        document.getElementById('recordIDcontainer').style.display = none;
+
+        const endpoint = document.getElementById('endpoint').value.toString();
+        fetch(endpoint)
+          .then(response => response.json())
+          .then(json => document.getElementById('output').textContent = JSON.stringyfy(json))
+          .then(err => document.getElementById('output').textContent = err);
       }
 
       // This function should fetch one entry from the given endpoint.
@@ -92,23 +103,78 @@
       // The main difference from fetchAll() will be the URL you request from; check
       // the writeup to view the URL pattern for fetch one and fetch all
       function fetchOne() {
-        // TODO
+        document.getElementById('recordForm').style.display = none;
+        document.getElementById('recordIDcontainer').style.display = none;
+
+        const id = window.prompt('Enter record ID');
+        const endpoint = `${document.getElementById('endpoint').value.toString()}/${id.toString()}`;
+        fetch(endpoint)
+          .then(response => response.json())
+          .then(json => document.getElementById('output').textContent = JSON.stringyfy(json))
+          .then(err => document.getElementById('output').textContent = err);
       }
 
       // This function should use fetch to create one entry in the given endpoint.
       // From the 4 CRUD actions, this is the CREATE action, and uses the POST http method.
       // The main difference from updateRecord() will be the URL you send data to; check
       // the writeup to view the URL pattern for create and update
-      function createRecord() {
-        // TODO
+      function createRecord(command) {
+        if (command == 'show') {
+          document.getElementById('recordForm').style.display = block;
+          document.getElementById('recordIDcontainer').style.display = none;
+        }
+        else if (command == 'submit') {
+          const author = document.getElementById('author').value.toString();
+          const title = document.getElementById('title').value.toString();
+          const postdata = {
+            'author': author,
+            'title': title
+          }
+
+          const endpoint = document.getElementById('endpoint').value.toString();
+          fetch(endpoint, {
+              method: 'POST',
+              headers: {
+                'Content-type': 'application/json'
+              },
+              body: JSON.stringify(postdata)
+            })
+            .then(response => response.json())
+            .then(json => document.getElementById('output').textContent = JSON.stringyfy(json))
+            .then(err => document.getElementById('output').textContent = err);
+        }
       }
 
       // This function should use fetch to update one existing entry in the given endpoint.
       // From the 4 CRUD actions, this is the UPDATE action, and uses the PUT http method.
       // The main difference from createRecord() will be the URL you send data to; check
       // the writeup to view the URL pattern for create and update
-      function updateRecord() {
-        // TODO
+      function updateRecord(command) {
+        if (command == 'show') {
+          document.getElementById('recordForm').style.display = block;
+          document.getElementById('recordIDcontainer').style.display = block;
+        }
+        else if (command == 'submit') {
+          const author = document.getElementById('author').value.toString();
+          const title = document.getElementById('title').value.toString();
+          const postdata = {
+            'author': author,
+            'title': title
+          }
+
+          const id = document.getElementById('recordIDcontainer').value;
+          const endpoint = `${document.getElementById('endpoint').value.toString()}/${id.toString()}`;
+          fetch(endpoint, {
+              method: 'PUT',
+              headers: {
+                'Content-type': 'application/json'
+              },
+              body: JSON.stringify(postdata)
+            })
+            .then(response => response.json())
+            .then(json => document.getElementById('output').textContent = JSON.stringyfy(json))
+            .then(err => document.getElementById('output').textContent = err);
+        }
       }
 
       // This function should use fetch to delete one existing entry in the given endpoint.
@@ -117,7 +183,20 @@
       // request; check the writeup to view the URL pattern for get one and delete. THERE IS NO 
       // delete all, only delete one.
       function deleteRecord() {
-        // TODO
+        document.getElementById('recordForm').style.display = none;
+        document.getElementById('recordIDcontainer').style.display = none;
+
+        const id = window.prompt('Enter record ID');
+        const endpoint = `${document.getElementById('endpoint').value.toString()}/${id.toString()}`;
+        fetch(endpoint, {
+              method: 'DELETE',
+              headers: {
+                'Content-type': 'application/json'
+              }
+            })
+            .then(response => response.json())
+            .then(json => document.getElementById('output').textContent = json)
+            .then(err => document.getElementById('output').textContent = err);
       }
 
       window.addEventListener('DOMContentLoaded', () => {
